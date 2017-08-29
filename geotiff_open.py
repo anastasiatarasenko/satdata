@@ -2,7 +2,7 @@ import numpy as np
 import numpy.ma as ma
 import gdal
 
-def readFile(filename, nbofbands=1):
+def readFile(filename, nbofbands=1, nth_point=10):
     filehandle = gdal.Open(filename)
     if filehandle is None:
       print ('Unable to open ', filename)
@@ -26,6 +26,7 @@ def readFile(filename, nbofbands=1):
       if scrband is None:
         continue
       band_data[:, :, band-1] = scrband.ReadAsArray()
+      band_data[::nth_point, ::nth_point, band-1] = scrband.ReadAsArray()
 
     return xsize,ysize, geotransform, geoproj, band_data
     
