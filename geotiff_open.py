@@ -2,7 +2,7 @@ import numpy as np
 import numpy.ma as ma
 import gdal
 
-def readFile(filename, nbofbands=1, nth_point=10):
+def readFile(filename, nbofbands=1, nth_point=1):
     filehandle = gdal.Open(filename)
     if filehandle is None:
       print ('Unable to open ', filename)
@@ -15,7 +15,7 @@ def readFile(filename, nbofbands=1, nth_point=10):
     xsize = filehandle.RasterXSize
     ysize = filehandle.RasterYSize
     
-    band_data=np.zeros((ysize, xsize, filehandle.RasterCount), dtype=np.float64)
+    band_array=np.zeros((ysize, xsize, filehandle.RasterCount), dtype=np.float64)
     
     print ("[ RASTER BAND COUNT ]: ", filehandle.RasterCount)
     for band in range(filehandle.RasterCount):
@@ -26,7 +26,8 @@ def readFile(filename, nbofbands=1, nth_point=10):
       if scrband is None:
         continue
       band_array[:, :, band-1] = scrband.ReadAsArray()
-      band_data = band_array[::nth_point, ::nth_point, band-1]
+    
+    band_data = band_array[::nth_point, ::nth_point, :]
 
     return xsize,ysize, geotransform, geoproj, band_data
     
