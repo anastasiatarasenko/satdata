@@ -25,7 +25,6 @@ def readFile(filename, nbofbands=1, nth_point=10):
 
       if scrband is None:
         continue
-      band_data[:, :, band-1] = scrband.ReadAsArray()
       band_data[::nth_point, ::nth_point, band-1] = scrband.ReadAsArray()
 
     return xsize,ysize, geotransform, geoproj, band_data
