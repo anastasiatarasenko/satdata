@@ -33,6 +33,10 @@ def readFile(filename, nbofbands=1):
     
     
 def get_latlon(band_data, geotransform, nth_point=10):
+    # "I'm making the assumption that the image isn't rotated/skewed/etc. 
+    # This is not the correct method in general, but let's ignore that for now
+    # If dxdy or dydx aren't 0, then this will be incorrect"
+    
     # geotransform is a gdal way of describing the data grid, see http://www.gdal.org/gdal_tutorial.html
     # nth_point is needed to artificially decrease high spatial resolution of 40-m Sentinel-1 images 
     # eg: 40*10th point => resolution of ~400 m
