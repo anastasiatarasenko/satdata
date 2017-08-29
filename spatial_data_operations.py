@@ -15,7 +15,7 @@ def create_mask(data_A, lat_A, lon_A, data_B, lat_B, lon_B, condition = lambda x
     lat_A_1d = np.ndarray.flatten(lat_A)
     data_A_1d = np.ndarray.flatten(data_A)
 
-    mask_interpolated = interpolate.griddata((lon_A_1d, lat_A_1d), data_A_1d, (lon, lat), method='nearest')
+    mask_interpolated = interpolate.griddata((lon_A_1d, lat_A_1d), data_A_1d, (lon_B, lat_B), method='nearest')
     masked_data_B = np.ma.masked_where(condition(mask_interpolated), data_B)
     
     return masked_data_B
